@@ -24,3 +24,4 @@ SECURITY.md
 app/autoload.php
 app/bootstrap.php
 auth.json
+*.sql
