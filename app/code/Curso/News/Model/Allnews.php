@@ -1,6 +1,7 @@
 <?php
 namespace Curso\News\Model;
 
+use Curso\New\Api\Data\AllnewsInterface;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\DataObject\IdentityInterface;
 use Magento\Framework\Exception\LocalizedException;
@@ -30,6 +31,13 @@ class Allnews extends AbstractModel
     {
         $values = [];
         return $values;
+    }
+    /**
+     * @return array
+     */
+	public function getAvailableStatuses()
+    {
+        return [self::STATUS_ENABLED => __('Enabled'), self::STATUS_DISABLED => __('Disabled')];
     }
 	
 	
