@@ -1,4 +1,5 @@
 <?php
+
 namespace Curso\News\Block\Adminhtml\Allnews\Edit;
 
 use Magento\Framework\View\Element\UiComponent\Control\ButtonProviderInterface;

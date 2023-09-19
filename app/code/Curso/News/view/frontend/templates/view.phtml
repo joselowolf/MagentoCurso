@@ -1,0 +1,5 @@
+<cd div class="curso-news">
+	<?php $news = $this->getNews() ?>
+	<div class="rsg-news-time"><?php echo $news->getCreatedAt() ?></div>
+	<div class="rsg-news-desc"><?php echo $news->getDescription() ?></div>
+</cd>
