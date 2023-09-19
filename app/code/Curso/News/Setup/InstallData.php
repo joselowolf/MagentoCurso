@@ -8,9 +8,6 @@ use Magento\Framework\Setup\ModuleDataSetupInterface;
 
 class InstallData implements InstallDataInterface
 {
-    /**
-     * @var [type]
-     */
     protected $date;
  
     public function __construct(
@@ -18,24 +15,20 @@ class InstallData implements InstallDataInterface
     ) {
         $this->date = $date;
     }
-    /**
-     * @param ModuleDataSetupInterface $setup
-     * @param ModuleContextInterface $context
-     * @return void
-     */
+    
     public function install(ModuleDataSetupInterface $setup, ModuleContextInterface $context)
     {
         $dataNewsRows = [
             [
-                'title' => 'News Title # 1',
-                'description' => 'Here is write news description # 1',
+                'title' => 'News Title 1',
+                'description' => 'Here is write news description 1',
                 'status' => 1,
                 'updated_at' => $this->date->date(),
                 'created_at' => $this->date->date()
             ],
             [
-                'title' => 'News Title # 2',
-                'description' => 'Here is write news description # 2',
+                'title' => 'News Title 2',
+                'description' => 'Here is write news description 2',
                 'status' => 1,
                 'updated_at' => $this->date->date(),
                 'created_at' => $this->date->date()
@@ -47,4 +40,4 @@ class InstallData implements InstallDataInterface
         }
     }
 }
-?>
+

@@ -6,9 +6,7 @@ use Magento\Framework\Model\ResourceModel\Db\Collection\AbstractCollection;
 class Collection extends AbstractCollection
 {
     protected $_idFieldName = 'news_id';
-	
 	protected $_eventPrefix = 'news_allnews_collection';
-
     protected $_eventObject = 'allnews_collection';
 	
 	/**
@@ -16,6 +14,9 @@ class Collection extends AbstractCollection
      */
 	protected function _construct()
 	{
-		$this->_init('Curso\News\Model\Allnews', 'Curso\News\Model\ResourceModel\Allnews');
+		$this->_init(
+			'Curso\News\Model\Allnews', 
+			'Curso\News\Model\ResourceModel\Allnews'
+		);
 	}
 }

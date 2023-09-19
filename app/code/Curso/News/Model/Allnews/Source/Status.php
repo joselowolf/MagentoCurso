@@ -5,9 +5,6 @@ use Magento\Framework\Data\OptionSourceInterface;
 
 class Status implements OptionSourceInterface
 {
-    /**
-     * @var [type]
-     */
     protected $allNews;
 
     public function __construct(\Curso\News\Model\Allnews $allNews)
@@ -15,6 +12,7 @@ class Status implements OptionSourceInterface
         $this->allNews = $allNews;
     }
     /**
+     *
      * @return array
      */
     public function toOptionArray()

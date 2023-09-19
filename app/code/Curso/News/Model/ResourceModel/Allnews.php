@@ -22,7 +22,12 @@ class Allnews extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
 	{
 		$this->_init('curso_news', 'news_id');
 	}
-	
+    /**
+     * Set updated_at and created_at before save
+     *
+     * @param \Magento\Framework\Model\AbstractModel $object
+     * @return object
+     */
 	protected function _beforeSave(\Magento\Framework\Model\AbstractModel $object)
     {
         $object->setUpdatedAt($this->_date->date());
