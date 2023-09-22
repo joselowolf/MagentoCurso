@@ -31,4 +31,14 @@ class Data extends AbstractHelper
     {
         return $this->getConfigValue('/rules/categories', $storeId);
     }
+
+    public function getRangeFrom($storeId = null)
+    {
+        return $this->getConfigValue('/rules/price_range_from', $storeId);
+    }
+
+    public function getRangeTo($storeId = null)
+    {
+        return $this->getConfigValue('/rules/price_range_to', $storeId);
+    }
 }

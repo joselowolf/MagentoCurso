@@ -28,6 +28,14 @@
                     <frontend_model>Curso\Discount\Block\Adminhtml\MultiUiSelect</frontend_model>
                     <can_be_empty>1</can_be_empty>
                 </field>
+                <field id="price_range_from" translate="label" sortOrder="0" type="text" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Price range from</label>
+                    <validate>required-entry validate-digits validate-not-negative-number validate-digits-range digits-range-0-10000000</validate>
+                </field>
+                <field id="price_range_to" translate="label" sortOrder="0" type="text" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Price range to</label>
+                    <validate>required-entry validate-digits validate-not-negative-number validate-digits-range digits-range-0-10000000</validate>
+                </field>
             </group>
         </section>
     </system>

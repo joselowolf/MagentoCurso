@@ -108,6 +108,11 @@ class CustomDiscount extends \Magento\Quote\Model\Quote\Address\Total\AbstractTo
         if(!$validCategory){
             return 0.0;
         }
+        // Check if the price range filters are valid
+        $validPriceRange = $this->chekPriceRangeFilter();
+        if(!$validPriceRange){
+            return 0.0;
+        }
         
         $newTotal = 0.0;
         if ($type == "" || $discountValue == "") {
@@ -166,6 +171,21 @@ class CustomDiscount extends \Magento\Quote\Model\Quote\Address\Total\AbstractTo
             if (in_array($valor, $array2)) {
                 return true;
             }
+        }
+        return false;
+    }
+    /**
+     * @return boolean
+     */
+    private function chekPriceRangeFilter() : bool{
+        $priceFrom = $this->_helperData->getRangeFrom();
+        $priceTo = $this->_helperData->getRangeTo();
+        if($priceFrom == "" || $priceTo == ""){
+            return false;
+        }
+        $subTotal = $this->_cart->getQuote()->getSubtotal();
+        if($subTotal >= $priceFrom && $subTotal <= $priceTo){
+            return true;
         }
         return false;
     }
