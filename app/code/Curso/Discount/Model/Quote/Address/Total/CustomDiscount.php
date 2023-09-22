@@ -17,7 +17,18 @@ class CustomDiscount extends \Magento\Quote\Model\Quote\Address\Total\AbstractTo
      * @var \Psr\Log\LoggerInterface
      */
     private $_logger;
-
+    /**
+     * @var \Magento\Checkout\Model\Cart
+     */
+    private $_cart;
+    /**
+     * @var \Magento\Catalog\Model\Product
+     */
+    private $_product;
+    /**
+     * @var \Magento\Catalog\Model\ResourceModel\Category\CollectionFactory
+     */
+    private $_categoryCollection;
     /**
      * @param \Magento\Framework\Pricing\PriceCurrencyInterface $priceCurrency [description]
      */
@@ -25,11 +36,17 @@ class CustomDiscount extends \Magento\Quote\Model\Quote\Address\Total\AbstractTo
         \Magento\Framework\Pricing\PriceCurrencyInterface $priceCurrency,
         \Curso\Discount\Helper\Data $helperData,
         \Psr\Log\LoggerInterface $logger,
+        \Magento\Checkout\Model\Cart $cart,
+        \Magento\Catalog\Model\Product $product,
+        \Magento\Catalog\Model\ResourceModel\Category\CollectionFactory $categoryCollectionFactory,
     ) {
+        $this->setCode('customdiscount');
         $this->_priceCurrency = $priceCurrency;
         $this->_helperData = $helperData;
         $this->_logger = $logger;
-        $this->setCode('customdiscount');
+        $this->_cart = $cart;
+        $this->_product = $product;
+        $this->_categoryCollection = $categoryCollectionFactory;
     }
 
     public function collect(
@@ -38,16 +55,18 @@ class CustomDiscount extends \Magento\Quote\Model\Quote\Address\Total\AbstractTo
         \Magento\Quote\Model\Quote\Address\Total $total
     ) {
         parent::collect($quote, $shippingAssignment, $total);
-            $this->_logger->info($quote->getSubtotal());
-            // $this->_logger->info(type($quote->getSubtotal()));
-            $customDiscountValue = $this->getNewTotal($quote->getSubtotal()) ;
-            if ($customDiscountValue == 0) {
-                return $this;
-            }
-            $customDiscount = $customDiscountValue *-1;
-            $total->addTotalAmount('customdiscount', $customDiscount);
-            $total->addBaseTotalAmount('customdiscount', $customDiscount);
-            $quote->setCustomDiscount($customDiscount);
+        
+        if ($quote->getSubtotal() == null){
+            return $this;
+        }
+        $customDiscountValue = $this->getDiscount($quote->getSubtotal()) ;
+        if ($customDiscountValue == 0) {
+            return $this;
+        }
+        $customDiscount = $customDiscountValue *-1;
+        $total->addTotalAmount('customdiscount', $customDiscount);
+        $total->addBaseTotalAmount('customdiscount', $customDiscount);
+        $quote->setCustomDiscount($customDiscount);
         return $this;
     }
 
@@ -64,7 +83,7 @@ class CustomDiscount extends \Magento\Quote\Model\Quote\Address\Total\AbstractTo
         return [
             'code' => $this->getCode(),
             'title' => $this->getLabel(),
-            'value' => $this->getNewTotal($quote->getSubtotal())
+            'value' => $this->getDiscount($quote->getSubtotal())
         ];
     }
 
@@ -80,9 +99,16 @@ class CustomDiscount extends \Magento\Quote\Model\Quote\Address\Total\AbstractTo
      * @param Float $total
      * @return Float
      */
-    private function getNewTotal(Float $total) : Float{
+    private function getDiscount(Float $total) : Float{
         $type = $this->_helperData->getValueType();
         $discountValue = $this->_helperData->getCustomValue();
+        
+        // Check if the category filters are valid
+        $validCategory = $this->checkCategoryFilters();
+        if(!$validCategory){
+            return 0.0;
+        }
+        
         $newTotal = 0.0;
         if ($type == "" || $discountValue == "") {
             return 0.0;
@@ -98,4 +124,50 @@ class CustomDiscount extends \Magento\Quote\Model\Quote\Address\Total\AbstractTo
         }
         return $newTotal;
     }
+    /**
+     * @return boolean
+     */
+    private function checkCategoryFilters() : bool{
+        $categories = explode(",", $this->_helperData->getCategories());
+        $itemsCollection = $this->_cart->getQuote()->getItemsCollection();
+        $itemsVisible = $this->_cart->getQuote()->getAllVisibleItems();
+        $products = $this->_cart->getQuote()->getAllItems();
+        $allProductsInCategories = true;
+        foreach($products as $product) {
+            $productCategories = $this->getProductCategories($product->getProductId());
+            $allProductsInCategories = $this->someValueInArray($categories, $productCategories);
+            if($allProductsInCategories){
+                break;
+            }
+        }
+        return $allProductsInCategories;
+    }
+    /**
+     * @param integer $productId
+     * @return array
+     */
+    private function getProductCategories(int $productId) : array{
+        $product = $this->_product->load($productId);
+        $categoryIds = $product->getCategoryIds();
+        $categories = $this->_categoryCollection->create()->addAttributeToSelect('*')->addAttributeToFilter('entity_id', $categoryIds);
+        $categoryIds = [];
+        foreach ($categories as $category) {
+            $categoryIds[] = $category->getId();
+        }
+        return $categoryIds;
+    }
+    /**
+     * @param array $array1
+     * @param array $array2
+     * @return boolean
+     */
+    function someValueInArray(array $array1, array $array2) : bool {
+        foreach ($array1 as $valor) {
+            if (in_array($valor, $array2)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 }

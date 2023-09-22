@@ -8,7 +8,7 @@
             <class>curso-separator</class>
             <label>Discount</label>
             <tab>curso</tab>
-            <resource>Curso_Discount::news_config</resource>
+            <resource>Curso_Discount::discpunt_config</resource>
             <group id="general" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
                 <label>General Configuration</label>
                 <field id="value_type" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
@@ -18,6 +18,15 @@
                 <field id="custom_value" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Custom Value</label>
                     <validate>validate-number</validate>
+                </field>
+            </group>
+            <group id="rules" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Filter Configuration</label>
+                <field id="categories" translate="label" type="multiselect" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="10">
+                    <label>Category Multi Select Dropdown</label>
+                    <source_model>Curso\Discount\Model\Config\Source\Attribute</source_model>
+                    <frontend_model>Curso\Discount\Block\Adminhtml\MultiUiSelect</frontend_model>
+                    <can_be_empty>1</can_be_empty>
                 </field>
             </group>
         </section>

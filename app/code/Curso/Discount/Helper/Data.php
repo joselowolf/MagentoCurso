@@ -11,7 +11,7 @@ class Data extends AbstractHelper
     public function getConfigValue($field, $storeId = null)
     {
         return $this->scopeConfig->getValue(
-            self::XML_PATH_CUSTOM_SECTION . '/general/' . $field,
+            self::XML_PATH_CUSTOM_SECTION . $field,
             ScopeInterface::SCOPE_STORE,
             $storeId
         );
@@ -19,11 +19,16 @@ class Data extends AbstractHelper
 
     public function getValueType($storeId = null)
     {
-        return $this->getConfigValue('value_type', $storeId);
+        return $this->getConfigValue('/general/value_type', $storeId);
     }
 
     public function getCustomValue($storeId = null)
     {
-        return $this->getConfigValue('custom_value', $storeId);
+        return $this->getConfigValue('/general/custom_value', $storeId);
+    }
+
+    public function getCategories($storeId = null)
+    {
+        return $this->getConfigValue('/rules/categories', $storeId);
     }
 }
