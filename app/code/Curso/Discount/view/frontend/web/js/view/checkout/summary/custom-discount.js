@@ -17,7 +17,10 @@ define(
                 return true;
             },
             getCustomdiscountTotal : function () {
-                var price = 10;
+                var price = 0;
+                if (this.totals()) {
+                    price = totals.getSegment('customdiscount').value;
+                }
                 return this.getFormattedPrice(price);
             }
          });
