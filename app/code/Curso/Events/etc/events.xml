@@ -1,0 +1,6 @@
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    <event name="curso_event_after">
+        <observer name="my_module_event_after_observer" instance="Curso\Events\Observer\MyObserver"/>
+    </event>
+</config>
