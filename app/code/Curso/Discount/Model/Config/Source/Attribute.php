@@ -1,6 +1,5 @@
 <?php
 namespace Curso\Discount\Model\Config\Source;
-
 use Magento\Framework\Option\ArrayInterface;
 
 class Attribute implements ArrayInterface

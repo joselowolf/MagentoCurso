@@ -60,9 +60,10 @@ class CustomDiscount extends \Magento\Quote\Model\Quote\Address\Total\AbstractTo
             return $this;
         }
         $customDiscountValue = $this->getDiscount($quote->getSubtotal()) ;
+        $quote->setData('custom_discount_amount', $customDiscountValue);
         if ($customDiscountValue == 0) {
             return $this;
-        }
+        }   
         $customDiscount = $customDiscountValue *-1;
         $total->addTotalAmount('customdiscount', $customDiscount);
         $total->addBaseTotalAmount('customdiscount', $customDiscount);
