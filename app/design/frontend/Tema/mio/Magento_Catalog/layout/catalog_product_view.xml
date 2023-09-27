@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceBlock name="view.addto.compare" remove="true"/>
+        <referenceBlock name="view.addto.wishlist" remove="true"/>
+
+        <referenceContainer name="product.info.extrahint">
+            <block name="secure.logos" template="Magento_Catalog::secure_logos.phtml" after="product.info.price">
+                <arguments>
+                    <argument name="title" xsi:type="string">We accept</argument>
+                    <argument name="path_image" xsi:type="string">Magento_Catalog::images/credit_cards.jpg</argument>
+                </arguments>
+            </block>
+        </referenceContainer>
+    </body>
+</page>
