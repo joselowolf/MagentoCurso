@@ -1,0 +1,30 @@
+body {
+    font-family: 'Roboto', sans-serif;
+    font-size: 18px;
+}
+.block-search {
+    float: right !important;
+    padding-left: 15px !important;
+    position: relative !important;
+    width: 100% !important;
+    z-index: 0 !important;
+}
+a:visited,
+.alink:visited {
+    color: #6E005D !important;
+    text-decoration: hsl(64, 80%, 50%) !important;
+}
+
+.login-text {
+    color: #8C6085
+}
+
+.create-text {
+    color: #676e00;
+
+    
+}
+
+span.counter{
+    background: #8C6085 !important;
+}
