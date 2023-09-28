@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+     <head>
+        <css src="css/custom.css"/>
+        <css src="https://use.fontawesome.com/releases/v5.15.4/css/all.css" src_type="url" />
+    </head>
+    <body>
+        <referenceBlock name="header.links">
+            <action method="setTemplate">
+                <argument name="template" xsi:type="string">Magento_Theme::html/custom_links.phtml</argument>
+            </action>
+        </referenceBlock>
+        <referenceContainer name="footer">
+            <block class="Magento\Framework\View\Element\Template" name="custom_footer" template="Magento_Theme::html/custom_footer.phtml" />
+        </referenceContainer> 
+        <referenceBlock name="logo">
+            <arguments>
+                <argument name="logo_file" xsi:type="string">images/logo.png</argument>
+                <argument name="logo_img_width" xsi:type="number">10</argument>
+                <argument name="logo_img_height" xsi:type="number">10</argument>
+            </arguments>
+        </referenceBlock>
+    </body>
+</page>
