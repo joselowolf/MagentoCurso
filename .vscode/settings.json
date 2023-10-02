@@ -1,0 +1,5 @@
+{
+    "phpstormFormatter.ideBinPath": null,
+    //phpstormFormatter.ideBinPath: The full path to the PHPStorm /bin directory.
+    //phpstormFormatter.styleGuidePath: Format code according to this code style settings file.
+}
